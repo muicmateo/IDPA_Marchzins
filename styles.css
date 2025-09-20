@@ -1,0 +1,338 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #0f1419 0%, #1e3a5f 50%, #2c5aa0 100%);
+  min-height: 100vh;
+  color: #ffffff;
+  padding: 20px;
+  line-height: 1.6;
+}
+
+/* Container für die Anwendung */
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 15px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  padding: 30px;
+  color: #1a365d;
+  backdrop-filter: blur(10px);
+}
+
+/* Sprache ändern */
+.language-switcher {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 15px;
+}
+
+#languageButton {
+  padding: 8px 16px;
+  background-color: #3182ce;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+
+#languageButton:hover {
+  background-color: #2b6cb0;
+}
+
+/* Hauptlayout: Links Eingabe, Rechts Ausgabe */
+.main-layout {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+/* Linke Seite - Eingabebereich */
+.input-section {
+  flex: 1;
+  max-width: 400px;
+}
+
+/* Rechte Seite - Ergebnisbereich */
+.result-section {
+  flex: 1;
+  max-width: 500px;
+}
+
+/* Header */
+h2 {
+  text-align: center;
+  color: #1a365d;
+  margin-bottom: 30px;
+  font-size: 2.2rem;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+h2::after {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, #ffd700, #ffed4a);
+  margin: 15px auto;
+  border-radius: 2px;
+}
+
+/* Eingabefelder Container */
+.input-group {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+/* Labels */
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #2d3748;
+  font-size: 1rem;
+}
+
+/* Eingabefelder (Number + Text) */
+input[type="number"],
+input[type="text"] {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: #f7fafc;
+  color: #2d3748;
+  transition: all 0.3s ease;
+}
+
+input[type="number"]:focus,
+input[type="text"]:focus {
+  outline: none;
+  border-color: #3182ce;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
+  transform: translateY(-1px);
+}
+
+input[type="number"]:hover,
+input[type="text"]:hover {
+  border-color: #4a90a4;
+}
+
+/* Fehlerzustand für Eingabefelder */
+input[type="number"].error,
+input[type="text"].error {
+  border-color: #e53e3e;
+  background-color: #fed7d7;
+  animation: shake 0.3s ease-in-out;
+}
+
+input[type="number"].error:focus,
+input[type="text"].error:focus {
+  box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.1);
+}
+
+/* Shake-Animation für Fehler */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* Fehlermeldungen */
+.error-message {
+  color: #ff0000;
+  font-size: 0.875rem;
+  margin-top: 5px;
+  display: none;
+  font-weight: 500;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.error-message.show {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Erfolgsmeldungen */
+.success-message {
+  color: #38a169;
+  font-size: 0.875rem;
+  margin-top: 5px;
+  display: none;
+  font-weight: 500;
+}
+
+.success-message.show {
+  display: block;
+}
+
+/* Button */
+#berechnenButton {
+  width: 100%;
+  max-width: 300px;
+  padding: 15px;
+  background: linear-gradient(135deg, #2b6cb0 0%, #3182ce 50%, #4299e1 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 25px 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden;
+}
+
+#berechnenButton:disabled {
+  background: #a0aec0;
+  cursor: not-allowed;
+  transform: none;
+}
+
+#berechnenButton::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+#berechnenButton:hover:not(:disabled) {
+  background: linear-gradient(135deg, #2c5aa0 0%, #3182ce 50%, #4299e1 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(49, 130, 206, 0.4);
+}
+
+#berechnenButton:hover:not(:disabled)::before {
+  left: 100%;
+}
+
+#berechnenButton:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 4px 15px rgba(49, 130, 206, 0.3);
+}
+
+/* Ergebnis Sektion */
+h3 {
+  color: #1a365d;
+  margin: 30px 0 15px 0;
+  font-size: 1.5rem;
+  border-bottom: 2px solid #ffd700;
+  padding-bottom: 8px;
+  display: inline-block;
+}
+
+/* Ergebnis Text */
+#ergebnis {
+  background: linear-gradient(135deg, #1a365d 0%, #2c5aa0 100%);
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  white-space: pre-line;
+  font-family: 'Courier New', monospace;
+  font-size: 1rem;
+  line-height: 1.8;
+  border-left: 5px solid #ffd700;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  min-height: 120px;
+}
+
+/* Allgemeine Fehlermeldung */
+.general-error {
+  background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
+  color: rgb(255, 255, 255);
+  padding: 15px;
+  border-radius: 10px;
+  margin: 15px 0;
+  font-weight: 500;
+  display: none;
+  animation: slideIn 0.3s ease-out;
+}
+
+.general-error.show {
+  display: block;
+}
+
+@keyframes slideIn {
+  from { transform: translateX(-20px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  body {
+    padding: 10px;
+  }
+  
+  .container {
+    padding: 20px;
+  }
+  
+  .main-layout {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .input-section,
+  .result-section {
+    max-width: none;
+  }
+  
+  h2 {
+    font-size: 1.8rem;
+  }
+  
+  input[type="number"],
+  input[type="text"] {
+    font-size: 16px; /* Verhindert Zoom auf iOS */
+  }
+}
+
+/* Animationen für bessere UX */
+.container {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Zusätzliche Verbesserungen */
+.input-group:focus-within label {
+  color: #3182ce;
+  transition: color 0.3s ease;
+}
+
+/* Gelbe Akzente für wichtige Werte */
+.highlight {
+  color: #ffd700;
+  font-weight: bold;
+}

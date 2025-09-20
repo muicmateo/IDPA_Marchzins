@@ -1,42 +1,64 @@
 <!DOCTYPE html>
 <html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
     <title>Marchzins-Bonus Rechner</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="language-switcher">
+      <button id="languageButton">English</button>
+    </div>
 
-    <main class="rechner-container">
-        <h1>Marchzins-Bonus Rechner</h1>
-        <p>Berechnen Sie den Zinsbonus für Kundinnen und Kunden mit Geburtstag im aktuellen Monat.</p>
+    <div class="container">
+      <h2>Marchzins-Bonus Rechner</h2>
 
-        <form id="bonus-form">
-            <div class="input-gruppe">
-                <label for="sparkapital">Sparkapital (CHF)</label>
-                <input type="number" id="sparkapital" placeholder="z.B. 50000" required>
-            </div>
+      <div class="main-layout">
+        <div class="input-section">
+          <div class="input-group">
+            <label id="label-kapital">Kapital (€):</label>
+            <input type="text" id="kapital" value="" />
+            <div class="error-message" id="kapital-error"></div>
+          </div>
 
-            <div class="input-gruppe">
-                <label for="zinssatz">Bonus-Zinssatz (%)</label>
-                <input type="number" id="zinssatz" step="0.01" placeholder="z.B. 1.5" required>
-            </div>
+          <div class="input-group">
+            <label id="label-normalzins">Normalzins (% p.a.):</label>
+            <input type="text" id="normalzins" value="" />
+            <div class="error-message" id="normalzins-error"></div>
+          </div>
 
-            <div class="input-gruppe">
-                <label for="geburtstag">Geburtstag (Tag im Monat)</label>
-                <input type="number" id="geburtstag" min="1" max="31" placeholder="z.B. 18" required>
-            </div>
+          <div class="input-group">
+            <label id="label-bonuszins">Bonuszins (% p.a.):</label>
+            <input type="text" id="bonuszins" value="" />
+            <div class="error-message" id="bonuszins-error"></div>
+          </div>
 
-            <button type="submit">Berechnen</button>
-        </form>
+          <div class="input-group">
+            <label id="label-geburtstag">Geburtstag (Tag):</label>
+            <input type="number" id="geburtstag" value="" min="1" max="31" />
+            <div class="error-message" id="geburtstag-error"></div>
+          </div>
 
-        <div id="ergebnis-bereich" class="hidden">
-            <h2>Ergebnis</h2>
-            <p>Brutto-Bonus: <strong id="brutto-bonus">0.00 CHF</strong></p>
+          <div class="input-group">
+            <label id="label-geburtsmonat">Geburtsmonat (1-12):</label>
+            <input type="number" id="geburtsmonat" value="" min="1" max="12" />
+            <div class="error-message" id="geburtsmonat-error"></div>
+          </div>
+
+          <div class="general-error" id="general-error"></div>
+
+          <button id="berechnenButton">Berechnen</button>
         </div>
-    </main>
+
+        <div class="result-section">
+          <h3>Ergebnis:</h3>
+          <p id="ergebnis">
+            Bitte geben Sie alle Werte ein und klicken Sie auf "Berechnen".
+          </p>
+        </div>
+      </div>
+    </div>
 
     <script src="app.js"></script>
-</body>
+  </body>
 </html>
