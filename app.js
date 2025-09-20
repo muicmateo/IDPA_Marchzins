@@ -103,7 +103,9 @@ function validateGeburtsmonat(value) {
 
 function validateGeburtstag(tag, monat) {
   const t = translations[currentLang];
-  if (isNaN(tag) || isNaN(monat)) return t.fehlerGeburtstag;
+
+  // Wenn Tag oder Monat noch leer/ungültig sind, keine Fehlermeldung
+  if (isNaN(tag) || isNaN(monat)) return null;
 
   const tageImMonat = new Date(new Date().getFullYear(), monat, 0).getDate();
   if (tag < 1 || tag > tageImMonat) {
@@ -114,13 +116,20 @@ function validateGeburtstag(tag, monat) {
   return null;
 }
 
+
 // --- Echtzeit-Validierung + Komma zu Punkt ---
 const inputs = [
   { id: 'kapital', validator: validateKapital },
   { id: 'normalzins', validator: (v) => validateZins(v, translations[currentLang].normalzins) },
   { id: 'bonuszins', validator: (v) => validateZins(v, translations[currentLang].bonuszins) },
   { id: 'geburtsmonat', validator: validateGeburtsmonat },
-  { id: 'geburtstag', validator: (v) => validateGeburtstag(v, parseInt(document.getElementById('geburtsmonat').value)) }
+  { 
+    id: 'geburtstag', 
+    validator: (v) => {
+      const monat = parseInt(document.getElementById('geburtsmonat').value);
+      return validateGeburtstag(v, monat);
+    }
+  }
 ];
 
 inputs.forEach(inputObj => {
@@ -248,6 +257,9 @@ function switchLanguage() {
   document.getElementById('berechnenButton').innerText = t.berechnen;
   document.getElementById('ergebnis').innerText = t.ergebnisPlaceholder;
   document.getElementById('general-error').innerText = '';
+
+    document.querySelector('.result-section h3').innerText = currentLang === 'de' ? 'Ergebnis:' : 'Result:';
+
   
   document.getElementById('languageButton').innerText = currentLang === 'de' ? 'English' : 'Deutsch';
 }
